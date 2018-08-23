@@ -89,10 +89,10 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-jpamodelgen</artifactId>
-		</dependency>
+		</dependency> -->
 		
 		<!-- Oauth2 Spring security -->
 		<dependency>
