@@ -2,7 +2,6 @@ package br.jus.trf1.aletheia.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import br.jus.trf1.aletheia.model.Demanda;
@@ -20,22 +19,42 @@ public class DemandaService {
 	@Autowired
 	private PessoaRepository pessoaRepository;
 	
+	public Demanda salvar(Demanda demanda) {
+		validarPessoa(demanda);
+		
+		return demandaRepository.save(demanda);
+	}
+	
 	public Demanda atualizar(Long codigo, Demanda demanda) {
 		
-		Demanda demandaSalva = demandaRepository.findOne(codigo);
-		if (demandaSalva == null){
-			throw new EmptyResultDataAccessException(1);
+		Demanda demandaSalva = buscarDemandaExistente(codigo);
+		if (!demanda.getPessoa().equals(demandaSalva.getPessoa())) {
+			validarPessoa(demanda);
 		}
 			BeanUtils.copyProperties(demanda, demandaSalva, "codigo");
 			return demandaRepository.save(demandaSalva);
 
 	}
+	
+	private void validarPessoa(Demanda demanda) {
+		Pessoa pessoa = null;
+		if (demanda.getPessoa().getCodigo() != null) {
+			pessoa = pessoaRepository.findOne(demanda.getPessoa().getCodigo());
+		}
 
-	public Demanda salvar(Demanda demanda) {
-		Pessoa pessoa = pessoaRepository.findOne(demanda.getPessoa().getCodigo());
-		if(pessoa == null || pessoa.isInativo()) {
+		if (pessoa == null || pessoa.isInativo()) {
 			throw new PessoaInexistenteOuInativaException();
 		}
-		return demandaRepository.save(demanda);
 	}
+	
+	private Demanda buscarDemandaExistente(Long codigo) {
+		Demanda demandaSalva = demandaRepository.findOne(codigo);
+		if (demandaSalva == null) {
+			throw new IllegalArgumentException();
+		}
+		return demandaSalva;
+	}
+
+
+	
 }

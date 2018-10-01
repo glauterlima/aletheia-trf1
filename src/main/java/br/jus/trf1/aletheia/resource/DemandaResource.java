@@ -87,21 +87,26 @@ public class DemandaResource {
 		demandaRepository.delete(codigo);
 	}
 	
-	@PutMapping("/{codigo}")
-	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_DEMANDA') and #oauth2.hasScope('write')")
-	public ResponseEntity<Demanda> atualizar(@PathVariable Long codigo, @Valid @RequestBody Demanda demanda) {
-	
-		Demanda demandaSalva = demandaService.atualizar(codigo, demanda);
-		return ResponseEntity.ok(demandaSalva);
 		
-	}
-	
 	@ExceptionHandler({ PessoaInexistenteOuInativaException.class })
 	public ResponseEntity<Object> handlePessoaInexistenteOuInativaException(PessoaInexistenteOuInativaException ex) {
 		String mensagemUsuario = messageSource.getMessage("pessoa.inexistente-ou-inativa", null, LocaleContextHolder.getLocale());
 		String mensagemDesenvolvedor = ex.toString();
 		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
 		return ResponseEntity.badRequest().body(erros);
+	}
+	
+	@PutMapping("/{codigo}")
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_DEMANDA') and #oauth2.hasScope('write')")
+	public ResponseEntity<Demanda> atualizar(@PathVariable Long codigo, @Valid @RequestBody Demanda demanda) {
+		
+		try {
+			Demanda demandaSalva = demandaService.atualizar(codigo, demanda);
+			return ResponseEntity.ok(demandaSalva);
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.notFound().build();
+		}
+		
 	}
 	
 }
