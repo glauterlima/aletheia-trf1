@@ -1,5 +1,6 @@
 package br.jus.trf1.aletheia.config.property;
 
+//propriedade Glauter Santos
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("aletheia")
