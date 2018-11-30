@@ -1,7 +1,6 @@
 package br.jus.trf1.aletheia.resource;
 
 import java.net.URI;
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
