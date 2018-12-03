@@ -1,17 +1,24 @@
 package br.jus.trf1.aletheia.repository.projection;
 
+import br.jus.trf1.aletheia.model.Plataforma;
+
 public class ResumoDemanda {
 	
 	private Long codigo;
 	private String nome;
 	private String sistema;
 	private String pessoa;
+	private String lote;
+	private Plataforma plataforma;
 	
-	public ResumoDemanda(Long codigo, String nome, String sistema, String pessoa) {
+	
+	public ResumoDemanda(Long codigo, String nome, String sistema, String pessoa, String lote, Plataforma plataforma) {
 		this.codigo = codigo;
 		this.nome = nome;
 		this.sistema = sistema;
 		this.pessoa = pessoa;
+		this.lote = lote;
+		this.plataforma = plataforma;
 	}	
 	
 	
@@ -43,6 +50,22 @@ public class ResumoDemanda {
 	public void setPessoa(String pessoa) {
 		this.pessoa = pessoa;
 	}
-	
+
+	public String getLote() {
+		return lote;
+	}
+
+	public void setLote(String lote) {
+		this.lote = lote;
+	}
+
+	public Plataforma getPlataforma() {
+		return plataforma;
+	}
+
+	public void setPlataforma(Plataforma plataforma) {
+		this.plataforma = plataforma;
+	}
+
 
 }
