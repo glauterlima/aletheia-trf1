@@ -58,8 +58,15 @@ public class DemandaRepositoryImpl implements DemandaRepositoryQuery{
 				, root.get(Demanda_.sistema).get(Sistema_.nome)
 				, root.get(Demanda_.pessoa).get(Pessoa_.nome)
 				, root.get(Demanda_.lote).get(Lote_.nome)
-				, root.get(Demanda_.plataforma)));
-				
+				, root.get(Demanda_.plataforma)
+				, root.get(Demanda_.tipo)
+				, root.get(Demanda_.totalPfBruto)
+				, root.get(Demanda_.totalPfLiquido)
+				, root.get(Demanda_.totalPfPlataforma)
+				, root.get(Demanda_.data)
+				, root.get(Demanda_.status)
+				, root.get(Demanda_.observacao)
+				, root.get(Demanda_.valor)));				
 				
 		
 		Predicate[] predicates = criarRestricoes(demandaFilter, builder, root);
