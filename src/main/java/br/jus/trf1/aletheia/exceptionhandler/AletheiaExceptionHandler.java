@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
 @ControllerAdvice
 public class AletheiaExceptionHandler extends ResponseEntityExceptionHandler {
