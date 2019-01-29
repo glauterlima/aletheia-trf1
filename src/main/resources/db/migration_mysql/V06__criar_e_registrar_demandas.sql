@@ -12,7 +12,8 @@ CREATE TABLE demanda (
 	data DATE NOT NULL,
 	status VARCHAR(20) NOT NULL,
 	observacao VARCHAR(200),
-	valor DECIMAL(10,2) NOT NULL,	
+	valor DECIMAL(10,2) NOT NULL,
+	UNIQUE (nome),	
 	FOREIGN KEY (codigo_sistema) REFERENCES sistema(codigo),
 	FOREIGN KEY (codigo_pessoa) REFERENCES pessoa(codigo),
 	FOREIGN KEY (codigo_lote) REFERENCES lote(codigo)

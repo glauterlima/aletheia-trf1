@@ -1,14 +1,19 @@
 package br.jus.trf1.aletheia.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "permissao")
+@SequenceGenerator(name="SQ-PERMISSAO", sequenceName="permissao_seq")
 public class Permissao {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="SQ-PERMISSAO")
 	private Long codigo;
 	private String descricao;
 

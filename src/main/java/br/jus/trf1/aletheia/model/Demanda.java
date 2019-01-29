@@ -12,17 +12,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "demanda")
+@SequenceGenerator(name="SQ-DEMANDA", sequenceName="demanda_seq")
 public class Demanda {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="SQ-DEMANDA")
 	private Long codigo;
-	
+		
 	@NotNull
 	private String nome;	
 	

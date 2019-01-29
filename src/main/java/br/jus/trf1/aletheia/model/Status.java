@@ -4,5 +4,6 @@ public enum Status {
 
 	PENDENTE,
 	EMANALISE,
-	FINALIZADA
+	APROVADA,
+	FATURADA
 }
