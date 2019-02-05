@@ -1,5 +1,6 @@
 package br.jus.trf1.aletheia.resource;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.jus.trf1.aletheia.dto.DemandaEstatisticaLote;
 import br.jus.trf1.aletheia.event.RecursoCriadoEvent;
 import br.jus.trf1.aletheia.exceptionhandler.AletheiaExceptionHandler.Erro;
 import br.jus.trf1.aletheia.model.Demanda;
@@ -50,6 +52,12 @@ public class DemandaResource {
 	
 	@Autowired
 	private MessageSource messageSource;
+	
+	@GetMapping("/estatisticas/por-lote")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_DEMANDA') and #oauth2.hasScope('read')")
+	public List<DemandaEstatisticaLote> porLote() {
+		return this.demandaRepository.porLote(LocalDate.now());
+	}
 	
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_DEMANDA') and #oauth2.hasScope('read')")

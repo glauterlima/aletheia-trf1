@@ -8,11 +8,11 @@ public class DemandaEstatisticaSistema {
 	
 	private Sistema sistema;
 	
-	private BigDecimal tota;
+	private BigDecimal total;
 
 	public DemandaEstatisticaSistema(Sistema sistema, BigDecimal tota) {
 		this.sistema = sistema;
-		this.tota = tota;
+		this.total = tota;
 	}
 
 	public Sistema getSistema() {
@@ -24,11 +24,11 @@ public class DemandaEstatisticaSistema {
 	}
 
 	public BigDecimal getTota() {
-		return tota;
+		return total;
 	}
 
 	public void setTota(BigDecimal tota) {
-		this.tota = tota;
+		this.total = tota;
 	}
 	
 	

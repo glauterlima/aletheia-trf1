@@ -1,5 +1,6 @@
 package br.jus.trf1.aletheia.repository.demanda;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 
+import br.jus.trf1.aletheia.dto.DemandaEstatisticaLote;
 import br.jus.trf1.aletheia.model.Demanda;
 import br.jus.trf1.aletheia.model.Demanda_;
 import br.jus.trf1.aletheia.model.Lote_;
@@ -28,6 +30,32 @@ public class DemandaRepositoryImpl implements DemandaRepositoryQuery{
 
 	@PersistenceContext
 	private EntityManager manager;
+	
+	@Override
+	public List<DemandaEstatisticaLote> porLote(LocalDate mesReferencia) {
+		CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
+		
+		CriteriaQuery<DemandaEstatisticaLote> criteriaQuery = criteriaBuilder.createQuery(DemandaEstatisticaLote.class);
+		
+		Root<Demanda> root = criteriaQuery.from(Demanda.class);
+		
+		criteriaQuery.select(criteriaBuilder.construct(DemandaEstatisticaLote.class,
+				root.get(Demanda_.lote),
+				criteriaBuilder.sum(root.get(Demanda_.valor))));
+		
+		LocalDate primeiroDia = mesReferencia.withDayOfMonth(1);
+		LocalDate ultimoDia = mesReferencia.withDayOfMonth(mesReferencia.lengthOfMonth());
+		
+		criteriaQuery.where(
+				criteriaBuilder.greaterThanOrEqualTo(root.get(Demanda_.data), primeiroDia),
+				criteriaBuilder.lessThanOrEqualTo(root.get(Demanda_.data), ultimoDia)); 
+				
+		criteriaQuery.groupBy(root.get(Demanda_.lote));
+		
+		TypedQuery<DemandaEstatisticaLote> typedQuery = manager.createQuery(criteriaQuery);
+		
+		return typedQuery.getResultList();
+	}
 	
 	@Override
 	public Page<Demanda> filtrar(DemandaFilter demandaFilter, Pageable pageable) {
@@ -120,9 +148,5 @@ public class DemandaRepositoryImpl implements DemandaRepositoryQuery{
 		
 		return manager.createQuery(criteria).getSingleResult();
 	}
-
-
-
-
 
 }
